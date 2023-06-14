@@ -1,0 +1,3 @@
+__pycache__/
+auth/credentials.json
+auth/token.json
