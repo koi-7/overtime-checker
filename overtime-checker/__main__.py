@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 from datetime import timedelta, timezone
+import argparse
 import datetime
 import os.path
 
@@ -22,7 +23,22 @@ TOKEN_PATH = os.path.join(AUTH_DIR, 'token.json')
 CREDENTIALS_PATH = os.path.join(AUTH_DIR, 'credentials.json')
 
 
+def timedelta_to_yyyymmdd(timedelta):
+    zero_paddming_month = '{:0>2}'.format(str(timedelta.month))
+    zero_paddming_day = '{:0>2}'.format(str(timedelta.day))
+    return str(timedelta.year) + '/' + zero_paddming_month + '/' + zero_paddming_day
+
+
+def timedelta_to_hhmm(timedelta):
+    total_seconds = timedelta.total_seconds()
+    return str(int(total_seconds // 3600)) + ':' + '{:0>2}'.format(str(int(total_seconds % 3600 // 60)))
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--verbose', help='残業時間の詳細表示', action='store_true')
+    args = parser.parse_args()
+
     creds = None
 
     if os.path.exists(TOKEN_PATH):
@@ -52,20 +68,34 @@ def main():
                                        maxResults=50,
                                        singleEvents=True,
                                        orderBy='startTime').execute()
-
         overtime_works = result.get('items', [])
 
         if overtime_works:
+            records = {}
             overtime_total = datetime.timedelta(hours=0, minutes=0)
+
             format = '%Y-%m-%dT%H:%M:%S%z'
             for overtime_work in overtime_works:
                 start_time = datetime.datetime.strptime(overtime_work['start'].get('dateTime'), format)
                 end_time = datetime.datetime.strptime(overtime_work['end'].get('dateTime'), format)
-                overtime_total = overtime_total + (end_time - start_time)
 
-            total_sec = overtime_total.total_seconds()
-            hour_message = '' if total_sec < 3600 else str(int(total_sec // 3600)) + '時間'
-            print('今月の残業時間は' + hour_message + str(int(total_sec % 3600 // 60)) + '分です。')
+                overtime = end_time - start_time
+
+                yyyymmdd = timedelta_to_yyyymmdd(start_time)
+
+                if yyyymmdd in records:
+                    records[yyyymmdd] = records[yyyymmdd] + overtime
+                else:
+                    records[yyyymmdd] = overtime
+
+                overtime_total = overtime_total + overtime
+
+            if args.verbose:
+                for key, value in records.items():
+                    print('{:<10}{:>7}'.format(key, timedelta_to_hhmm(value)))
+                print('-' * 17)
+
+            print('{:<10}{:>7}'.format('total', timedelta_to_hhmm(overtime_total)))
         else:
             print('今月は残業していません。')
 
