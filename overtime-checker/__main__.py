@@ -9,9 +9,9 @@ from .calendar_reader import *
 
 
 MAIN_DIR = os.path.dirname(__file__)
-AUTH_DIR = os.path.join(MAIN_DIR, '../auth/')
-CREDENTIALS_PATH = os.path.join(AUTH_DIR, 'credentials.json')
-TOKEN_PATH = os.path.join(AUTH_DIR, 'token.json')
+DATA_DIR = os.path.join(MAIN_DIR, '../data/')
+CREDENTIALS_PATH = os.path.join(DATA_DIR, 'credentials.json')
+TOKEN_PATH = os.path.join(DATA_DIR, 'token.json')
 
 
 def main():
