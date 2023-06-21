@@ -65,7 +65,7 @@ class CalendarReader:
 
                 return str(overtime)[:-3]
             else:
-                return '0'
+                return None
 
         except HttpError as error:
             print('An error occurred: %s' % error)
