@@ -14,7 +14,7 @@ from .slack_notifier import *
 MAIN_DIR = os.path.dirname(__file__)
 DATA_DIR = os.path.join(MAIN_DIR, '../data/')
 CREDENTIALS_PATH = os.path.join(DATA_DIR, 'credentials.json')
-GOOGLE_TOKEN_PATH = os.path.join(DATA_DIR, 'token.json')
+GOOGLE_TOKEN_PATH = os.path.join(DATA_DIR, 'google_token.json')
 NOTION_TOKEN_PATH = os.path.join(DATA_DIR, 'notion_token')
 DB_URL_PATH = os.path.join(DATA_DIR, 'db_url.txt')
 SLACK_TOKEN_PATH = os.path.join(DATA_DIR, 'slack_token')
