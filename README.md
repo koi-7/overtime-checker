@@ -55,13 +55,21 @@ $ pip3 install -r requirements.txt
 
 ### Cron の設定
 
-毎朝 6 時にプログラムが動くようにする（PYTHONPATH の設定を忘れないように注意）
+毎朝 6 時にプログラムが動くようにする（タイムゾーン、PYTHONPATH の設定を忘れないように注意）
 
-```
+``` bash
 $ crontab -e
 ```
 
 ```
+CRON_TZ=Asia/Tokyo
+
 PYTHONPATH=$PYTHONPATH:/opt/overtime-checker/
 0 6 * * * /usr/bin/python3 -m overtime-checker
+```
+
+タイムゾーンを反映させるために crond を再起動する
+
+``` bash
+$ systemctl restart cron
 ```
