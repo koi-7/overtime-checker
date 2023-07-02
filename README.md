@@ -3,7 +3,7 @@
 残業時間チェッカー
 
 - 毎日の残業時間を Google カレンダーから読み込んで Notion DB に記録する
-- 月初めには前月の残業時間のまとめを Slack で通知する
+- 月末にはその月の残業時間のまとめを Slack で通知する
 
 ## Usage
 
@@ -19,7 +19,7 @@ $ git clone https://github.com/koi-7/overtime-checker.git
 
 - `credentials.json`: Google の認証に必要
 - `google_token.json`: Google の認証に必要（ブラウザがない場合、適当に用意する）
-- `db_url.txt`: Notion DB の書き込みに必要
+- `database_url`: Notion DB の書き込みに必要
 - `notion_token`: Notion の認証に必要
 - `slack_token`: Slack の認証に必要
 
@@ -30,7 +30,7 @@ overtime-checker
 |-- README.md
 |-- data
 |   |-- credentials.json
-|   |-- db_url.txt
+|   |-- database_url.txt
 |   |-- google_token.json
 |   |-- notion_token
 |   `-- slack_token
@@ -53,9 +53,9 @@ overtime-checker
 $ pip3 install -r requirements.txt
 ```
 
-### Cron の設定
+### Cron の設定例
 
-毎朝 6 時にプログラムが動くようにする（タイムゾーン、PYTHONPATH の設定を忘れないように注意）
+毎晩 23 時 55 分にプログラムが動くようにする（タイムゾーン、PYTHONPATH の設定を忘れないように注意）
 
 ``` bash
 $ crontab -e
@@ -65,7 +65,7 @@ $ crontab -e
 CRON_TZ=Asia/Tokyo
 
 PYTHONPATH=$PYTHONPATH:/opt/overtime-checker/
-0 6 * * * /usr/bin/python3 -m overtime-checker
+55 23 * * * /usr/bin/python3 -m overtime-checker
 ```
 
 タイムゾーンを反映させるために crond を再起動する
