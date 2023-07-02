@@ -37,7 +37,7 @@ class CalendarReader:
         return creds
 
     @classmethod
-    def get_overtime_yesterday(self, creds, date):
+    def get_overtime(self, creds, date):
         try:
             service = build('calendar', 'v3', credentials=creds)
 
