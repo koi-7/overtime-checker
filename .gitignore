@@ -1,7 +1,7 @@
 __pycache__/
 
-data/*
-!data/.gitkeep
+config/*
+!config/sample.ini
 
 logs/*
 !logs/.gitkeep
