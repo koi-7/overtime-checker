@@ -6,13 +6,6 @@ class Functions:
         pass
 
     @classmethod
-    def url_to_dbid(self, db_url_path):
-        with open(db_url_path, 'r') as f:
-            url =  f.readline().rstrip('\n')
-        l = url.split('/')
-        return l[4].split('?')[0]
-
-    @classmethod
     def sum_of_timelist(self, timelist):
         sum = datetime.timedelta(0)
         for time in timelist:

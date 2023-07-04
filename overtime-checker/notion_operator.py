@@ -8,21 +8,21 @@ class NotionOperator:
         pass
 
     @classmethod
-    def insert_record(self, notion_token, db_id, date, overtime):
+    def insert_record(self, notion_token, notion_database_id, date, overtime):
         request_url = 'https://api.notion.com/v1/pages/'
         headers = {'Accept': 'application/json',
                    'Authorization': 'Bearer ' + notion_token,
                    'Content-Type': 'application/json; charset=UTF-8',
                    'Notion-Version': '2022-06-28'}
-        json = {'parent': {'database_id': db_id},
+        json = {'parent': {'database_id': notion_database_id},
                 'properties': {'Date': {'title': [{'text': {'content': date}}]},
                                'Time': {'rich_text': [{'text': {'content': overtime}}]}}}
 
         requests.post(request_url, headers=headers, json=json)
 
     @classmethod
-    def read_records(self, notion_token, db_id, year_month):
-        req_url = 'https://api.notion.com/v1/databases/' + db_id + '/query'
+    def read_records(self, notion_token, notion_database_id, year_month):
+        req_url = 'https://api.notion.com/v1/databases/' + notion_database_id + '/query'
         headers = {'Authorization': 'Bearer ' + notion_token,
                    'Content-Type': 'application/json; charset=UTF-8',
                    'Notion-Version': '2022-06-28'}
