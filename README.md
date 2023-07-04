@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/koi-7/overtime-checker/assets/61448492/651d4b05-3008-42d3-afce-cbf7a89f7148">
+</p>
+
 # overtime-checker
 
 残業時間チェッカー
@@ -10,52 +14,35 @@
 ### ダウンロード
 
 ``` bash
+$ cd ~
 $ git clone https://github.com/koi-7/overtime-checker.git
 ```
 
 ### 必要なファイル準備
 
-必要なファイルは `overtime-checker/data/` ディレクトリに入れておく
+必要なファイルは `overtime-checker/config/` ディレクトリに入れておく
 
 - `credentials.json`: Google の認証に必要
 - `google_token.json`: Google の認証に必要（ブラウザがない場合、適当に用意する）
-- `database_url`: Notion DB の書き込みに必要
-- `notion_token`: Notion の認証に必要
-- `slack_token`: Slack の認証に必要
-
-hint: ディレクトリ構成
-
-```
-overtime-checker
-|-- README.md
-|-- data
-|   |-- credentials.json
-|   |-- database_url.txt
-|   |-- google_token.json
-|   |-- notion_token
-|   `-- slack_token
-|-- overtime-checker
-|   |-- __init__.py
-|   |-- __main__.py
-|   |-- __pycache__
-|   |-- calendar_reader.py
-|   |-- functions.py
-|   |-- notion_operator.py
-|   `-- slack_notifier.py
-`-- requirements.txt
-```
+- `config.ini`: `sample.ini` を参考に作成する
 
 ### requirements
 
-必要なライブラリを入れる
-
 ``` bash
+$ cd overtime-checker
 $ pip3 install -r requirements.txt
 ```
 
-### Cron の設定例
+### 好きな場所に配置（例: `/opt/` 配下）
 
-毎晩 23 時 55 分にプログラムが動くようにする（タイムゾーン、PYTHONPATH の設定を忘れないように注意）
+``` bash
+$ cd ~
+$ sudo mv overtime-checker/ /opt/
+```
+
+## Example
+
+毎晩 23 時 55 分にプログラムが動くように Cron を設定する（タイムゾーン、PYTHONPATH の設定を忘れないように注意）
 
 ``` bash
 $ crontab -e
@@ -71,5 +58,5 @@ PYTHONPATH=$PYTHONPATH:/opt/overtime-checker/
 タイムゾーンを反映させるために crond を再起動する
 
 ``` bash
-$ systemctl restart cron
+$ sudo systemctl restart cron
 ```
